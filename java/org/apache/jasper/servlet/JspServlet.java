@@ -282,7 +282,7 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
             throws ServletException, IOException {
 
         // jspFile may be configured as an init-param for this servlet instance
-        String jspUri = jspFile;
+        String jspUri = jspFile;                                                        //编译源码1：请求到达JspServlet的service()
 
         if (jspUri == null) {
             /*
@@ -290,8 +290,8 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
              * RequestDispatcher.include()
              */
             jspUri = (String) request.getAttribute(
-                    RequestDispatcher.INCLUDE_SERVLET_PATH);
-            if (jspUri != null) {
+                    RequestDispatcher.INCLUDE_SERVLET_PATH);                            //编译源码2：获取jsp路径
+            if (jspUri != null) {                                                       //编译源码3.1：如果jsp路径不为null
                 /*
                  * Requested JSP has been target of
                  * RequestDispatcher.include(). Its path is assembled from the
@@ -302,13 +302,13 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
                 if (pathInfo != null) {
                     jspUri += pathInfo;
                 }
-            } else {
+            } else {                                                                    //编译源码3.2：如果jsp路径为null
                 /*
                  * Requested JSP has not been the target of a
                  * RequestDispatcher.include(). Reconstruct its path from the
                  * request's getServletPath() and getPathInfo()
                  */
-                jspUri = request.getServletPath();
+                jspUri = request.getServletPath();                                      //编译源码4：获取默认路径，在web.xml的<welcome-file-list>中配置
                 String pathInfo = request.getPathInfo();
                 if (pathInfo != null) {
                     jspUri += pathInfo;
@@ -326,8 +326,8 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
         }
 
         try {
-            boolean precompile = preCompile(request);
-            serviceJspFile(request, response, jspUri, precompile);
+            boolean precompile = preCompile(request);                                   //编译源码5：判定当前是否是预编译请求
+            serviceJspFile(request, response, jspUri, precompile);                      //编译源码6：执行serviceJspFile()
         } catch (RuntimeException e) {
             throw e;
         } catch (ServletException e) {
@@ -364,7 +364,7 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
                                 boolean precompile)
         throws ServletException, IOException {
 
-        JspServletWrapper wrapper = rctxt.getWrapper(jspUri);
+        JspServletWrapper wrapper = rctxt.getWrapper(jspUri);                   //编译源码7：获取JspServletWrapper对象
         if (wrapper == null) {
             synchronized(this) {
                 wrapper = rctxt.getWrapper(jspUri);
@@ -383,7 +383,7 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
         }
 
         try {
-            wrapper.service(request, response, precompile);
+            wrapper.service(request, response, precompile);                     //编译源码8：调用JspServletWrapper的service()
         } catch (FileNotFoundException fnfe) {
             handleMissingResource(request, response, jspUri);
         }

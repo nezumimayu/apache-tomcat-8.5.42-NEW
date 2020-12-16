@@ -372,7 +372,7 @@ public class JspServletWrapper {
 
         try {
 
-            if (ctxt.isRemoved()) {
+            if (ctxt.isRemoved()) {                                                     //编译源码9：校验文件是否存在
                 throw new FileNotFoundException(jspUri);
             }
 
@@ -396,7 +396,7 @@ public class JspServletWrapper {
                 synchronized (this) {
                     if (options.getDevelopment() || mustCompile) {
                         // The following sets reload to true, if necessary
-                        ctxt.compile();
+                        ctxt.compile();                                                 //编译源码10：若为开发环境或第一次调用，调用JspCompilationContext进行编译
                         mustCompile = false;
                     }
                 }
@@ -410,7 +410,7 @@ public class JspServletWrapper {
             /*
              * (2) (Re)load servlet class file
              */
-            servlet = getServlet();
+            servlet = getServlet();                                                     //编译源码15：通过生成的class对象生成servlet对象，该servlet的变量名为index_jsp
 
             // If a page is to be precompiled only, return.
             if (precompile) {
@@ -473,7 +473,7 @@ public class JspServletWrapper {
                    servlet.service(request, response);
                 }
             } else {
-                servlet.service(request, response);
+                servlet.service(request, response);                                                     //编译源码16：调用该servlet的service()进行请求处理
             }
         } catch (UnavailableException ex) {
             String includeRequestUri = (String)

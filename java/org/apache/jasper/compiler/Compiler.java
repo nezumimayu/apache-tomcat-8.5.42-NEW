@@ -174,7 +174,7 @@ public abstract class Compiler {
         }
 
         ctxt.checkOutputDir();
-        String javaFileName = ctxt.getServletJavaFileName();
+        String javaFileName = ctxt.getServletJavaFileName();                                //编译源码13：生成的文件名为index_jsp.java
 
         try {
             /*
@@ -370,12 +370,12 @@ public abstract class Compiler {
         }
 
         try {
-            String[] smap = generateJava();
+            String[] smap = generateJava();                                     //编译源码12：调用generateJava()用于生成java文件
             File javaFile = new File(ctxt.getServletJavaFileName());
             Long jspLastModified = ctxt.getLastModified(ctxt.getJspFile());
             javaFile.setLastModified(jspLastModified.longValue());
             if (compileClass) {
-                generateClass(smap);
+                generateClass(smap);                                            //编译源码14：调用generateClass()用于生成class文件
                 // Fix for bugzilla 41606
                 // Set JspServletWrapper.servletClassLastModifiedTime after successful compile
                 File targetFile = new File(ctxt.getClassFileName());

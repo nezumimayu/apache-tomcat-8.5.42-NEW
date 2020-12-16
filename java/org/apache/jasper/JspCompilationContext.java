@@ -592,7 +592,7 @@ public class JspCompilationContext {
             try {
                 jspCompiler.removeGeneratedFiles();
                 jspLoader = null;
-                jspCompiler.compile();
+                jspCompiler.compile();                                              //编译源码11：调用JDTCompiler的compile()进行编译jsp
                 jsw.setReload(true);
                 jsw.setCompilationException(null);
             } catch (JasperException ex) {
